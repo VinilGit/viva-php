@@ -60,9 +60,17 @@ class PayRequest extends PayRequestAbstract {
 }
 
 /**
- * Class just to verify card data before the transaction
+ * Class to capture transaction
  */
-class VerifyRequest extends PayRequestAbstract {
+class CaptureRequest extends PayRequestAbstract {
 
-	protected $apiOperation = 'VERIFY';
+	protected $apiOperation = 'CAPTURE';
+}
+
+/**
+ * Class to cancel the transaction
+ */
+class CancelRequest extends PayRequestAbstract {
+
+	protected $apiOperation = 'CANCEL';
 }
