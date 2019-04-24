@@ -1,4 +1,4 @@
-<?php namespace ATDev\Commweb;
+<?php namespace ATDev\Viva;
 
 /**
  * Currency class

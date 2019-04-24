@@ -1,4 +1,4 @@
-<?php namespace ATDev\Commweb;
+<?php namespace ATDev\Viva;
 
 /**
  * Order class
@@ -39,7 +39,7 @@ class Order implements \JsonSerializable {
 	 *
 	 * @param string $id
 	 *
-	 * @return \ATDev\Commweb\Order
+	 * @return \ATDev\Viva\Order
 	 */
 	public function setId($id) {
 
@@ -63,7 +63,7 @@ class Order implements \JsonSerializable {
 	 *
 	 * @param string $amount
 	 *
-	 * @return \ATDev\Commweb\Order
+	 * @return \ATDev\Viva\Order
 	 */
 	public function setAmount($amount) {
 
@@ -77,7 +77,7 @@ class Order implements \JsonSerializable {
 	 *
 	 * @param string $currency
 	 *
-	 * @return \ATDev\Commweb\Order
+	 * @return \ATDev\Viva\Order
 	 */
 	public function setCurrency($currency) {
 

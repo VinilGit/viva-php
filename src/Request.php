@@ -1,4 +1,4 @@
-<?php namespace ATDev\Commweb;
+<?php namespace ATDev\Viva;
 
 /**
  * An abstract class which handles all requests to api
@@ -40,9 +40,9 @@ abstract class RequestAbstract implements \JsonSerializable {
 	/**
 	 * Sets transaction for the request
 	 *
-	 * @param \ATDev\Commweb\Transaction $transaction
+	 * @param \ATDev\Viva\Transaction $transaction
 	 *
-	 * @return \ATDev\Commweb\RequestAbstract
+	 * @return \ATDev\Viva\RequestAbstract
 	 */
 	public function setTransaction(Transaction $transaction) {
 
@@ -54,9 +54,9 @@ abstract class RequestAbstract implements \JsonSerializable {
 	/**
 	 * Sets order for the request
 	 *
-	 * @param \ATDev\Commweb\Order $order
+	 * @param \ATDev\Viva\Order $order
 	 *
-	 * @return \ATDev\Commweb\RequestAbstract
+	 * @return \ATDev\Viva\RequestAbstract
 	 */
 	public function setOrder(Order $order) {
 
@@ -70,7 +70,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 	 *
 	 * @param string $version
 	 *
-	 * @return \ATDev\Commweb\RequestAbstract
+	 * @return \ATDev\Viva\RequestAbstract
 	 */
 	public function setVersion($version) {
 
@@ -84,7 +84,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 	 *
 	 * @param string $url
 	 *
-	 * @return \ATDev\Commweb\RequestAbstract
+	 * @return \ATDev\Viva\RequestAbstract
 	 */
 	public function setUrl($url) {
 
@@ -98,7 +98,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 	 *
 	 * @param string $merchant Merchant id
 	 *
-	 * @return \ATDev\Commweb\RequestAbstract
+	 * @return \ATDev\Viva\RequestAbstract
 	 */
 	public function setMerchant($merchant) {
 
@@ -130,7 +130,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 	 *
 	 * @param string $password
 	 *
-	 * @return \ATDev\Commweb\RequestAbstract
+	 * @return \ATDev\Viva\RequestAbstract
 	 */
 	public function setApiPassword($password) {
 
@@ -144,7 +144,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 	 *
 	 * @param bool $testMode
 	 *
-	 * @return \ATDev\Commweb\RequestAbstract
+	 * @return \ATDev\Viva\RequestAbstract
 	 */
 	public function setTestMode($testMode) {
 
@@ -166,7 +166,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 	/**
 	 * Sends request to api
 	 *
-	 * @return \ATDev\Commweb\RequestAbstract
+	 * @return \ATDev\Viva\RequestAbstract
 	 */
 	public function send() {
 

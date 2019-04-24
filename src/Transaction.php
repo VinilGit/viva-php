@@ -1,4 +1,4 @@
-<?php namespace ATDev\Commweb;
+<?php namespace ATDev\Viva;
 
 /**
  * Transaction class
@@ -39,7 +39,7 @@ class Transaction implements \JsonSerializable {
 	 *
 	 * @param string $id
 	 *
-	 * @return \ATDev\Commweb\Transaction
+	 * @return \ATDev\Viva\Transaction
 	 */
 	public function setId($id) {
 
@@ -63,7 +63,7 @@ class Transaction implements \JsonSerializable {
 	 *
 	 * @param string $amount
 	 *
-	 * @return \ATDev\Commweb\Transaction
+	 * @return \ATDev\Viva\Transaction
 	 */
 	public function setAmount($amount) {
 
@@ -77,7 +77,7 @@ class Transaction implements \JsonSerializable {
 	 *
 	 * @param string $currency
 	 *
-	 * @return \ATDev\Commweb\Transaction
+	 * @return \ATDev\Viva\Transaction
 	 */
 	public function setCurrency($currency) {
 

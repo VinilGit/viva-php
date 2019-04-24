@@ -1,4 +1,4 @@
-<?php namespace ATDev\Commweb;
+<?php namespace ATDev\Viva;
 
 /**
  * Card class
@@ -35,7 +35,7 @@ class Card implements \JsonSerializable {
 	 *
 	 * @param string $number Card number
 	 *
-	 * @return \ATDev\Commweb\Card
+	 * @return \ATDev\Viva\Card
 	 */
 	public function setNumber($number) {
 
@@ -49,7 +49,7 @@ class Card implements \JsonSerializable {
 	 *
 	 * @param string $month Expiration month
 	 *
-	 * @return \ATDev\Commweb\Card
+	 * @return \ATDev\Viva\Card
 	 */
 	public function setMonth($month) {
 
@@ -63,7 +63,7 @@ class Card implements \JsonSerializable {
 	 *
 	 * @param string $year Expiration year
 	 *
-	 * @return \ATDev\Commweb\Card
+	 * @return \ATDev\Viva\Card
 	 */
 	public function setYear($year) {
 
@@ -77,7 +77,7 @@ class Card implements \JsonSerializable {
 	 *
 	 * @param string $securityCode Card security code
 	 *
-	 * @return \ATDev\Commweb\Card
+	 * @return \ATDev\Viva\Card
 	 */
 	public function setSecurityCode($securityCode) {
 

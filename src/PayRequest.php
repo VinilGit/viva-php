@@ -1,19 +1,19 @@
-<?php namespace ATDev\Commweb;
+<?php namespace ATDev\Viva;
 
 /**
  * An abstract class to init the transaction
  */
 abstract class PayRequestAbstract extends RequestAbstract {
 
-	/** @var \ATDev\Commweb\SourceOfFunds Source of funds for the transaction */
+	/** @var \ATDev\Viva\SourceOfFunds Source of funds for the transaction */
 	private $sourceOfFunds;
 
 	/**
 	 * Sets source of funds of request
 	 *
-	 * @param \ATDev\Commweb\SourceOfFunds $sourceOfFunds
+	 * @param \ATDev\Viva\SourceOfFunds $sourceOfFunds
 	 *
-	 * @return \ATDev\Commweb\PayRequestAbstract
+	 * @return \ATDev\Viva\PayRequestAbstract
 	 */
 	public function setSourceOfFunds(SourceOfFunds $sourceOfFunds) {
 

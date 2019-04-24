@@ -1,4 +1,4 @@
-<?php namespace ATDev\Commweb;
+<?php namespace ATDev\Viva;
 
 /**
  * An abstract source of funds class
@@ -29,13 +29,13 @@ class SourceOfFundsCard extends SourceOfFunds {
 	/** @var string Type of funds source */
 	protected $type = "CARD";
 
-	/** @var \ATDev\Commweb\Card Card as funds source */
+	/** @var \ATDev\Viva\Card Card as funds source */
 	private $card;
 
 	/**
 	 * Class constructor
 	 *
-	 * @param \ATDev\Commweb\Card $card
+	 * @param \ATDev\Viva\Card $card
 	 */
 	public function __construct(Card $card) {
 
@@ -47,9 +47,9 @@ class SourceOfFundsCard extends SourceOfFunds {
 	/**
 	 * Sets card for the source of funds = 'CARD'
 	 *
-	 * @param \ATDev\Commweb\Card $card
+	 * @param \ATDev\Viva\Card $card
 	 *
-	 * @return \ATDev\Commweb\SourceOfFunds
+	 * @return \ATDev\Viva\SourceOfFunds
 	 */
 	public function setCard(Card $card) {
 

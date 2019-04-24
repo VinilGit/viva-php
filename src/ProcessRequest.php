@@ -1,19 +1,19 @@
-<?php namespace ATDev\Commweb;
+<?php namespace ATDev\Viva;
 
 /**
  * An abstract class to process existing transactions
  */
 abstract class ProcessRequestAbstract extends RequestAbstract {
 
-	/** @var \ATDev\Commweb\Transaction Old transaction data */
+	/** @var \ATDev\Viva\Transaction Old transaction data */
 	private $oldTransaction;
 
 	/**
 	 * Sets old transaction for request to process
 	 *
-	 * @param \ATDev\Commweb\Transaction $oldTransaction
+	 * @param \ATDev\Viva\Transaction $oldTransaction
 	 *
-	 * @return \ATDev\Commweb\ProcessRequestAbstract
+	 * @return \ATDev\Viva\ProcessRequestAbstract
 	 */
 	public function setOldTransaction(Transaction $oldTransaction) {
 
@@ -25,7 +25,7 @@ abstract class ProcessRequestAbstract extends RequestAbstract {
 	/**
 	 * Gets old transaction for request to process
 	 *
-	 * @return \ATDev\Commweb\Transaction
+	 * @return \ATDev\Viva\Transaction
 	 */
 	public function getOldTransaction() {
 
