@@ -5,22 +5,7 @@
  */
 abstract class PayRequestAbstract extends RequestAbstract {
 
-	/** @var \ATDev\Viva\SourceOfFunds Source of funds for the transaction */
-	private $sourceOfFunds;
 
-	/**
-	 * Sets source of funds of request
-	 *
-	 * @param \ATDev\Viva\SourceOfFunds $sourceOfFunds
-	 *
-	 * @return \ATDev\Viva\PayRequestAbstract
-	 */
-	public function setSourceOfFunds(SourceOfFunds $sourceOfFunds) {
-
-		$this->sourceOfFunds = $sourceOfFunds;
-
-		return $this;
-	}
 
 	/**
 	 * Specifies what has to be returned on serialization to json

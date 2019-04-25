@@ -5,79 +5,33 @@
  */
 abstract class RequestAbstract implements \JsonSerializable {
 
-	/** @var string Api operation, should be defined at child classes */
-	protected $apiOperation;
 	/** @var string Request method, can be overriden at child classes if required*/
-	protected $method = 'PUT';
-	/** @var string Subject order */
-	protected $order;
-	/** @var string Subject transaction */
-	protected $transaction;
+	protected $method = 'POST';
+        
+        protected $requestObject;
 
-	/** @var string Api version */
-	private $version = 34;
-	/** @var string Api url */
-	private $url = "https://paymentgateway.commbank.com.au/api/rest/";
-	/** @var string Merchant id */
-	private $merchant;
-	/** @var string Api password */
+
+        protected $sourceCode;
+        protected $amount;
+        /** @var string Api password */
 	private $password;
+
+        /** @var string Api url */
+	private $url;
+        protected $requestUrl;
+        
+//        public $apiPaymentsUrl;
+//        public $apiPaymentsCreateOrderUrl;
+                
 	/** @var bool Test mode, "TEST" will be added to merchant id when sent to api */
-	private $testMode = false;
+	protected $testMode = false;
 	/** @var string|null Error message, empty if no error, some text if any */
 	private $error;
+        
+        protected $paymentsUrl = "/api/transactions";
+        protected $paymentsCreateOrderUrl = "/api/orders";
+        
 
-	/**
-	 * Class constructor
-	 *
-	 * @param string $merchant Merchant id
-	 */
-	public function __construct($merchant) {
-
-		$this->setMerchant($merchant);
-	}
-
-	/**
-	 * Sets transaction for the request
-	 *
-	 * @param \ATDev\Viva\Transaction $transaction
-	 *
-	 * @return \ATDev\Viva\RequestAbstract
-	 */
-	public function setTransaction(Transaction $transaction) {
-
-		$this->transaction = $transaction;
-
-		return $this;
-	}
-
-	/**
-	 * Sets order for the request
-	 *
-	 * @param \ATDev\Viva\Order $order
-	 *
-	 * @return \ATDev\Viva\RequestAbstract
-	 */
-	public function setOrder(Order $order) {
-
-		$this->order = $order;
-
-		return $this;
-	}
-
-	/**
-	 * Sets api version to request
-	 *
-	 * @param string $version
-	 *
-	 * @return \ATDev\Viva\RequestAbstract
-	 */
-	public function setVersion($version) {
-
-		$this->version = $version;
-
-		return $this;
-	}
 
 	/**
 	 * Sets api url
@@ -91,38 +45,6 @@ abstract class RequestAbstract implements \JsonSerializable {
 		$this->url = $url;
 
 		return $this;
-	}
-
-	/**
-	 * Sets merchant id
-	 *
-	 * @param string $merchant Merchant id
-	 *
-	 * @return \ATDev\Viva\RequestAbstract
-	 */
-	public function setMerchant($merchant) {
-
-		if ( substr($merchant, 0, 4) == "TEST" ) {
-
-			$this->setTestMode(true);
-			$this->merchant = substr($merchant, 4, strlen($merchant) - 4);
-		} else {
-
-			$this->setTestMode(false);
-			$this->merchant = $merchant;
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Gets merchant id
-	 *
-	 * @return string
-	 */
-	public function getMerchant() {
-
-		return ($this->testMode) ? ("TEST" . $this->merchant) : $this->merchant;
 	}
 
 	/**
@@ -162,6 +84,30 @@ abstract class RequestAbstract implements \JsonSerializable {
 
 		return $this->testMode;
 	}
+        
+        /**
+	 * Sets test mode
+	 *
+	 * @param object $requestObject
+	 *
+	 * @return \ATDev\Viva\RequestAbstract
+	 */
+	public function setRequesrObject($requestObject) {
+
+		$this->requestObject = $requestObject;
+
+		return $this;
+	}
+
+	/**
+	 * Gets test mode
+	 *
+	 * @return object
+	 */
+	public function getRequesrObject() {
+
+		return $this->requestObject;
+	}
 
 	/**
 	 * Sends request to api
@@ -169,48 +115,9 @@ abstract class RequestAbstract implements \JsonSerializable {
 	 * @return \ATDev\Viva\RequestAbstract
 	 */
 	public function send() {
-
-		$client = new \GuzzleHttp\Client();
-		$res = $client->request(
-			$this->method,
-			$this->getApiUrl(),
-			[
-				"auth" => [$this->getApiUsername(), $this->getApiPassword()],
-				"json" => $this,
-				"timeout" => 60,
-				"connect_timeout" => 60,
-				"exceptions" => false
-			]
-		);
-
-		$code = $res->getStatusCode();
-		$body = $res->getBody()->getContents();
-
-		if ( ( $code < 200 ) || ($code >= 300) ) {
-
-			$this->error = $body;
-		} else {
-
-			$this->error = null;
-		}
-
-		$result = json_decode($body);
-
-		if ( ( ! isset($result->response->gatewayCode) ) || ( strtoupper(trim($result->response->gatewayCode)) != "APPROVED" ) ) {
-
-			if ( (isset($result->response->acquirerMessage) ) && ( ! empty(trim($result->response->acquirerMessage))) ) {
-
-				$this->error = trim($result->response->acquirerMessage);
-			} else {
-				
-				$this->error = 'An error has occured';
-			}
-		} else {
-
-			$this->error = null;
-		}
-
-		return $this;
+            
+		return $this->ExecuteCall($this->getRequestUrl(), $this->getRequesrObject(), $this->getApiPassword());
+                
 	}
 
 	/**
@@ -221,16 +128,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 	public function getError() {
 
 		return $this->error;
-	}
-
-	/**
-	 * Gets user name for the api
-	 *
-	 * @return string
-	 */
-	public function getApiUsername() {
-
-		return "merchant." . $this->getMerchant();
+                
 	}
 
 	/**
@@ -242,32 +140,90 @@ abstract class RequestAbstract implements \JsonSerializable {
 
 		return $this->password;
 	}
-
+        
+        /**
+	 * Gets base url
+	 *
+	 * @return string
+	 */
+        public function getUrl()
+	{
+            if (empty($this->url)) {
+                return $this->test_mode ? "https://demo.vivapayments.com" : "https://www.vivapayments.com";
+            } else {
+                return $this->url;
+            }
+	}
+        
+        /**
+	 * Gets full request url for the request
+	 *
+	 * @return string
+	 */
+	private function getRequestUrl() {
+            return $this->url;
+	}
+        
+      
 	/**
 	 * Gets full api url for the request
 	 *
 	 * @return string
 	 */
-	private function getApiUrl() {
+//	private function getApiPaymentsUrl() {
+//            return $this->url.$this->paymentsUrl;
+//	}
+        
+        /**
+	 * Gets full api url for the request
+	 *
+	 * @return string
+	 */
+//	private function getApiPaymentsCreateOrderUrl() {
+//            return $this->url.$this->paymentsCreateOrderUrl;
+//	}
+        
+	protected function ExecuteCall($postUrl, $postobject, $password){
 
-		$url = $this->url;
+            $postargs=json_encode($postobject);
 
-		if ( ! empty($this->version) ) {
-			$url = $url . "version/" . $this->version . "/";
-		}
+            // Get the curl session object
+            $session = curl_init($postUrl);
 
-		if ( ! empty($this->merchant) ) {
-			$url = $url . "merchant/" . $this->getMerchant() . "/";
-		}
+            // Set the POST options.
+            curl_setopt($session, CURLOPT_POST, true);
+            curl_setopt($session, CURLOPT_POSTFIELDS, $postargs);
+            curl_setopt($session, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($postargs))
+            );
+            curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($session, CURLOPT_USERPWD, $password);
+            curl_setopt($session, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
 
-		if ( ! empty($this->order) ) {
-			$url = $url . "order/" . $this->order->getId() . "/";
-		}
+            curl_setopt($session, CURLOPT_HEADER, true);
 
-		if ( ! empty($this->transaction) ) {
-			$url = $url . "transaction/" . $this->transaction->getId() . "/";
-		}
+            // Do the POST and then close the session
+            $response = curl_exec($session);
 
-		return $url;
+            // Separate Header from Body
+            $header_len = curl_getinfo($session, CURLINFO_HEADER_SIZE);
+            $resHeader = substr($response, 0, $header_len);
+            $resBody =  substr($response, $header_len);
+
+            // Parse the JSON response
+            if(is_object(json_decode($resBody))){
+                    $resultObj=json_decode($resBody);
+            } else {
+                    preg_match('#^HTTP/1.(?:0|1) [\d]{3} (.*)$#m', $resHeader, $match);
+
+                    curl_close($session);
+                    $this->error = trim($match[1]);
+
+                    return $this;
+            }
+
+            curl_close($session);
+            return $resultObj;
 	}
 }
