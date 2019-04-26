@@ -10,7 +10,16 @@ abstract class PayRequestAbstract extends RequestAbstract {
         private $cardToken;
         private $installments;
         private $paymentMethodId;
-        
+               
+        /**
+	 * Gets full api url for the request
+	 *
+	 * @return string
+	 */
+	private function getRequestUrl() {
+            return $this->url.$this->paymentsUrl;
+	}
+          
 	/**
 	 * Specifies what has to be returned on serialization to json
 	 *

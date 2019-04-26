@@ -17,8 +17,6 @@ abstract class RequestAbstract implements \JsonSerializable {
 	private $url;
         protected $requestUrl;
         
-//        public $apiPaymentsUrl;
-//        public $apiPaymentsCreateOrderUrl;
                 
 	/** @var bool Test mode, "TEST" will be added to merchant id when sent to api */
 	protected $testMode = false;
@@ -186,23 +184,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 	}
         
       
-	/**
-	 * Gets full api url for the request
-	 *
-	 * @return string
-	 */
-//	private function getApiPaymentsUrl() {
-//            return $this->url.$this->paymentsUrl;
-//	}
-        
-        /**
-	 * Gets full api url for the request
-	 *
-	 * @return string
-	 */
-//	private function getApiPaymentsCreateOrderUrl() {
-//            return $this->url.$this->paymentsCreateOrderUrl;
-//	}
+
         
 	protected function ExecuteCall($postUrl, $password){
 

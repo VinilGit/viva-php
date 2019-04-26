@@ -30,6 +30,15 @@ class Order extends RequestAbstract  {
                         
 		}
 	}
+        
+        /**
+	 * Gets full api url for the request
+	 *
+	 * @return string
+	 */
+	private function getRequestUrl() {
+            return $this->url.$this->paymentsUrl;
+	}
 
 	/**
 	 * Sets order maxInstallments
