@@ -11,7 +11,10 @@ abstract class RequestAbstract implements \JsonSerializable {
         protected $sourceCode;
         protected $amount;
         /** @var string Api password */
-	private $password;
+	protected $password;
+        
+        protected $maxInstallments;
+        protected $isPreAuth;
 
         /** @var string Api url */
 	private $url;
@@ -54,6 +57,15 @@ abstract class RequestAbstract implements \JsonSerializable {
             } else {
                 return $this->url;
             }
+	}
+        
+        /**
+	 * Gets full api url for the request
+	 *
+	 * @return string
+	 */
+	protected function getRequestUrl() {
+            return $this->url;
 	}
 
 	/**
@@ -129,29 +141,77 @@ abstract class RequestAbstract implements \JsonSerializable {
 	}
         
         /**
-	 * Sets test mode
+	 * Sets sourceCode
 	 *
-	 * @param object $requestObject
+	 * @param object $sourceCode
 	 *
 	 * @return \ATDev\Viva\RequestAbstract
 	 */
-	public function setRequesrObject($requestObject) {
+	public function setSourceCode($sourceCode) {
 
-		$this->requestObject = $requestObject;
+		$this->sourceCode = $sourceCode;
 
 		return $this;
 	}
 
 	/**
-	 * Gets test mode
+	 * Gets sourceCode
 	 *
 	 * @return object
 	 */
-	public function getRequesrObject() {
+	public function getSourceCode() {
 
-		return $this->requestObject;
+		return $this->sourceCode;
 	}
 
+        /**
+	 * Sets order maxInstallments
+	 *
+	 * @param int $maxInstallments
+	 *
+	 * @return \ATDev\Viva\Order
+	 */
+	public function setMaxInstallments($maxInstallments) {
+
+		$this->maxInstallments = $maxInstallments;
+
+		return $this;
+	}
+
+        /**
+	 * Gets order maxInstallments
+	 *
+	 * @return string
+	 */
+	public function getMaxInstallments() {
+
+		return $this->maxInstallments;
+	}
+        
+        /**
+	 * Sets order isPreAuth
+	 *
+	 * @param bool $isPreAuth
+	 *
+	 * @return \ATDev\Viva\Order
+	 */
+	public function setIsPreAuth($isPreAuth) {
+
+		$this->maxInstallments = $maxInstallments;
+
+		return $this;
+	}
+        
+	/**
+	 * Gets order isPreAuth
+	 *
+	 * @return bool
+	 */
+	public function getIsPreAuth() {
+
+		return $this->isPreAuth;
+	}
+        
 	/**
 	 * Gets error
 	 *
@@ -162,16 +222,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 		return $this->error;
                 
 	}
-        
-        /**
-	 * Gets full request url for the request
-	 *
-	 * @return string
-	 */
-	private function getRequestUrl() {
-            return $this->url;
-	}
-        
+              
         /**
 	 * Sends request to api
 	 *
