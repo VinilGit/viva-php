@@ -43,14 +43,8 @@ class PayRequest extends RequestAbstract {
 
             if (empty($this->order)) {
 
-                $this->order = (new Order())->
-                        setAmount($this->amount)
-                        ->setApiPassword($this->pass)
-                        ->setSourceCode($this->sourceCode)
-                        ->setMaxInstallments($this->maxInstallments)
-                        ->setIsPreAuth($this->isPreAuth)
-                        ->send();
-                
+                $this->order = (new Order($this->sourceCode, $this->password, $this->amount, $this->installments, $this->isPreAuth))
+                        ->send();     
             }
             
             return $this->order;

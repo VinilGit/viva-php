@@ -13,7 +13,6 @@ abstract class RequestAbstract implements \JsonSerializable {
         /** @var string Api password */
 	protected $password;
         
-        protected $maxInstallments;
         protected $isPreAuth;
 
         /** @var string Api url */
@@ -163,31 +162,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 
 		return $this->sourceCode;
 	}
-
-        /**
-	 * Sets order maxInstallments
-	 *
-	 * @param int $maxInstallments
-	 *
-	 * @return \ATDev\Viva\Order
-	 */
-	public function setMaxInstallments($maxInstallments) {
-
-		$this->maxInstallments = $maxInstallments;
-
-		return $this;
-	}
-
-        /**
-	 * Gets order maxInstallments
-	 *
-	 * @return string
-	 */
-	public function getMaxInstallments() {
-
-		return $this->maxInstallments;
-	}
-        
+  
         /**
 	 * Sets order isPreAuth
 	 *
@@ -197,7 +172,7 @@ abstract class RequestAbstract implements \JsonSerializable {
 	 */
 	public function setIsPreAuth($isPreAuth) {
 
-		$this->maxInstallments = $maxInstallments;
+		$this->isPreAuth = $isPreAuth;
 
 		return $this;
 	}

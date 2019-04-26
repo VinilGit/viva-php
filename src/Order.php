@@ -4,6 +4,8 @@
  * Order class
  */
 class Order extends RequestAbstract  {
+    
+        protected $maxInstallments;
 
 	/**
 	 * Class constructor
@@ -37,6 +39,30 @@ class Order extends RequestAbstract  {
             return $this->url.$this->paymentsUrl;
 	}
 
+        /**
+	 * Sets order maxInstallments
+	 *
+	 * @param int $maxInstallments
+	 *
+	 * @return \ATDev\Viva\Order
+	 */
+	public function setMaxInstallments($maxInstallments) {
+
+		$this->maxInstallments = $maxInstallments;
+
+		return $this;
+	}
+
+        /**
+	 * Gets order maxInstallments
+	 *
+	 * @return string
+	 */
+	public function getMaxInstallments() {
+
+		return $this->maxInstallments;
+	}
+        
 	/**
 	 * Specifies what has to be returned on serialization to json
 	 *
