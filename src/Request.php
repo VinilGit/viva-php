@@ -8,9 +8,6 @@ abstract class RequestAbstract implements \JsonSerializable {
 	/** @var string Request method, can be overriden at child classes if required*/
 	protected $method = 'POST';
         
-        protected $requestObject;
-
-
         protected $sourceCode;
         protected $amount;
         /** @var string Api password */
@@ -46,6 +43,20 @@ abstract class RequestAbstract implements \JsonSerializable {
 
 		return $this;
 	}
+                  
+        /**
+	 * Gets base url
+	 *
+	 * @return string
+	 */
+        public function getUrl()
+	{
+            if (empty($this->url)) {
+                return $this->test_mode ? "https://demo.vivapayments.com" : "https://www.vivapayments.com";
+            } else {
+                return $this->url;
+            }
+	}
 
 	/**
 	 * Set api password
@@ -61,6 +72,16 @@ abstract class RequestAbstract implements \JsonSerializable {
 		return $this;
 	}
 
+	/**
+	 * Gets password for the api
+	 *
+	 * @return string
+	 */
+	public function getApiPassword() {
+
+		return $this->password;
+	}
+        
 	/**
 	 * Sets test mode
 	 *
@@ -83,6 +104,30 @@ abstract class RequestAbstract implements \JsonSerializable {
 	public function getTestMode() {
 
 		return $this->testMode;
+	}
+        
+        /**
+	 * Sets order amount
+	 *
+	 * @param string $amount
+	 *
+	 * @return \ATDev\Viva\Order
+	 */
+	public function setAmount($amount) {
+
+		$this->amount = $amount;
+
+		return $this;
+	}
+        
+        /**
+	 * Gets test mode
+	 *
+	 * @return string
+	 */
+	public function getAmount() {
+
+		return $this->amount;
 	}
         
         /**
@@ -110,17 +155,6 @@ abstract class RequestAbstract implements \JsonSerializable {
 	}
 
 	/**
-	 * Sends request to api
-	 *
-	 * @return \ATDev\Viva\RequestAbstract
-	 */
-	public function send() {
-            
-		return $this->ExecuteCall($this->getRequestUrl(), $this->getRequesrObject(), $this->getApiPassword());
-                
-	}
-
-	/**
 	 * Gets error
 	 *
 	 * @return string
@@ -130,30 +164,6 @@ abstract class RequestAbstract implements \JsonSerializable {
 		return $this->error;
                 
 	}
-
-	/**
-	 * Gets password for the api
-	 *
-	 * @return string
-	 */
-	public function getApiPassword() {
-
-		return $this->password;
-	}
-        
-        /**
-	 * Gets base url
-	 *
-	 * @return string
-	 */
-        public function getUrl()
-	{
-            if (empty($this->url)) {
-                return $this->test_mode ? "https://demo.vivapayments.com" : "https://www.vivapayments.com";
-            } else {
-                return $this->url;
-            }
-	}
         
         /**
 	 * Gets full request url for the request
@@ -162,6 +172,17 @@ abstract class RequestAbstract implements \JsonSerializable {
 	 */
 	private function getRequestUrl() {
             return $this->url;
+	}
+        
+        /**
+	 * Sends request to api
+	 *
+	 * @return \ATDev\Viva\RequestAbstract
+	 */
+	public function send() {
+            
+		return $this->ExecuteCall($this->getRequestUrl(), $this->getApiPassword());
+                
 	}
         
       
@@ -183,9 +204,9 @@ abstract class RequestAbstract implements \JsonSerializable {
 //            return $this->url.$this->paymentsCreateOrderUrl;
 //	}
         
-	protected function ExecuteCall($postUrl, $postobject, $password){
+	protected function ExecuteCall($postUrl, $password){
 
-            $postargs=json_encode($postobject);
+            $postargs=json_encode($this);
 
             // Get the curl session object
             $session = curl_init($postUrl);

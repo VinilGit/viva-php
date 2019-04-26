@@ -5,8 +5,12 @@
  */
 abstract class PayRequestAbstract extends RequestAbstract {
 
-
-
+        private $order;
+	private $orderCode;
+        private $cardToken;
+        private $installments;
+        private $paymentMethodId;
+        
 	/**
 	 * Specifies what has to be returned on serialization to json
 	 *
@@ -14,48 +18,19 @@ abstract class PayRequestAbstract extends RequestAbstract {
 	 */
 	public function jsonSerialize() {
 
-		$result = [
-			"apiOperation" => $this->apiOperation,
-			"order" => $this->order
+                $result = [
+                        "SourceCode" => $this->sourceCode,
+                        "Amount" => $this->amount,
+			"OrderCode" => $this->orderCode,
+                        "CreditCard" => ["Token" => $this->cardToken],
+                        "Installments" => $this->installments,
 		];
+                
+                if ( ! empty($this->paymentMethodId) ) {
 
-		if ( ! empty($this->sourceOfFunds) ) {
-
-			$result["sourceOfFunds"] = $this->sourceOfFunds;
+			$result["PaymentMethodId"] = $this->paymentMethodId;
 		}
 
 		return $result;
 	}
-}
-
-/**
- * Class to authorize the transaction
- */
-class AuthorizeRequest extends PayRequestAbstract {
-
-	protected $apiOperation = 'AUTHORIZE';
-}
-
-/**
- * Class to make payment transaction
- */
-class PayRequest extends PayRequestAbstract {
-
-	protected $apiOperation = 'PAY';
-}
-
-/**
- * Class to capture transaction
- */
-class CaptureRequest extends PayRequestAbstract {
-
-	protected $apiOperation = 'CAPTURE';
-}
-
-/**
- * Class to cancel the transaction
- */
-class CancelRequest extends PayRequestAbstract {
-
-	protected $apiOperation = 'CANCEL';
 }

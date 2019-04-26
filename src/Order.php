@@ -3,91 +3,82 @@
 /**
  * Order class
  */
-class Order implements \JsonSerializable {
+class Order extends RequestAbstract  {
 
-	/** @var string Order id */
-	private $id;
-	/** @var string Order amount */
-	private $amount;
-	/** @var string Order currency */
-	private $currency = 'AUD';
+	private $maxInstallments;
+        private $isPreAuth;
 
 	/**
 	 * Class constructor
 	 *
-	 * @param string $id Order id
-	 * @param string|null $amount Order amount
-	 * @param string|null $currency Order currency
+	 * @param string $sourceCode Order sourceCode
+         * @param string $password Order password
+         * @param string $amount 
+         * @param int $maxInstallments Order maxInstallments
+	 * @param bool|null $isPreAuth 
 	 */
-	public function __construct($id, $amount = null, $currency = null) {
+	public function __construct($sourceCode, $password, $amount, $maxInstallments = 0, $isPreAuth = null) {
 
-		$this->setId($id);
+		$this->setSourceCode($sourceCode);
+                $this->setApiPassword($password);
+                $this->setAmount($amount);
+                $this->setMaxInstallments($maxInstallments);
 
-		if ( ! empty($amount) ) {
+		if ( ! empty($isPreAuth)) {
 
-			$this->setAmount($amount);
-		}
-
-		if ( ! empty($currency)) {
-
-			$this->setCurrency($currency);
+			$this->setIsPreAuth($isPreAuth);
+                        
 		}
 	}
 
 	/**
-	 * Sets order id
+	 * Sets order maxInstallments
 	 *
-	 * @param string $id
+	 * @param int $maxInstallments
 	 *
 	 * @return \ATDev\Viva\Order
 	 */
-	public function setId($id) {
+	public function setMaxInstallments($maxInstallments) {
 
-		$this->id = $id;
+		$this->maxInstallments = $maxInstallments;
 
 		return $this;
 	}
 
 	/**
-	 * Gets order id
+	 * Gets order isPreAuth
+	 *
+	 * @return bool
+	 */
+	public function getIsPreAuth() {
+
+		return $this->isPreAuth;
+	}
+        
+        /**
+	 * Sets order isPreAuth
+	 *
+	 * @param bool $isPreAuth
+	 *
+	 * @return \ATDev\Viva\Order
+	 */
+	public function setIsPreAuth($isPreAuth) {
+
+		$this->maxInstallments = $maxInstallments;
+
+		return $this;
+	}
+
+	/**
+	 * Gets order maxInstallments
 	 *
 	 * @return string
 	 */
-	public function getId() {
+	public function getMaxInstallments() {
 
-		return $this->id;
+		return $this->maxInstallments;
 	}
 
-	/**
-	 * Sets order amount
-	 *
-	 * @param string $amount
-	 *
-	 * @return \ATDev\Viva\Order
-	 */
-	public function setAmount($amount) {
-
-		$this->amount = $amount;
-
-		return $this;
-	}
-
-	/**
-	 * Sets order currency
-	 *
-	 * @param string $currency
-	 *
-	 * @return \ATDev\Viva\Order
-	 */
-	public function setCurrency($currency) {
-
-		if ( in_array($currency, Currency::getAvailable()) ) {
-
-			$this->currency = $currency;
-		}
-
-		return $this;
-	}
 
 	/**
 	 * Specifies what has to be returned on serialization to json
@@ -96,9 +87,17 @@ class Order implements \JsonSerializable {
 	 */
 	public function jsonSerialize() {
 
-		return [
-			"amount" => $this->amount,
-			"currency" => $this->currency
+		$result = [
+			"SourceCode" => $this->sourceCode,
+                        "Amount" => $this->amount,
+                        "MaxInstallments" => $this->maxInstallments
 		];
+                
+                if ( ! empty($this->isPreAuth) ) {
+
+			$result["IsPreAuth"] = $this->isPreAuth;
+		}
+
+		return $result;
 	}
 }
