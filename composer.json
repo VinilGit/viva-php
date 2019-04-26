@@ -1,7 +1,7 @@
 {
     "name": "atdev/commweb",
     "description": "Viva Direct Payment REST API SDK",
-    "keywords": ["viva"],
+    "keywords": ["viva-php, viva"],
     "homepage": "https://github.com/VinilGit/viva-php",
     "license": "MIT",
     "autoload": {
